@@ -1,0 +1,88 @@
+/*
+1.-ID de los clientes de la Ciudad de Monterrey
+
+SELECT "Id_Cliente", "Nombre", "Apellido_Paterno", "Apellido_Materno" 
+FROM public."Clientes" 
+WHERE "Ciudad" = 'Monterrey'
+*/
+
+/*
+2.-ID y descripción de los productos que cuesten menos de 15 pesos
+
+SELECT "SKU", "Descripcion" FROM public."Productos"
+WHERE "Precio"<=15
+*/
+
+
+/*
+3.-ID y nombre de los clientes que no aparecen en la tabla de ventas (Clientes que no han comprado productos)
+SELECT "Id_Cliente", "Nombre", "Apellido_Paterno", "Apellido_Materno" 
+FROM public."Clientes" 
+WHERE "Id_Cliente" NOT IN (SELECT "Id_Cliente" FROM public."Ventas")
+*/
+
+/*
+4.-ID y nombre de los clientes, cantidad vendida, y descripción del producto, en las ventas en las cuales se vendieron más de 10 unidades.
+
+SELECT public."Detalle_Ventas"."Id_Venta", public."Clientes"."Id_Cliente", public."Clientes"."Nombre", SUM("Cantidad") AS TOTAL 
+FROM public."Detalle_Ventas" 
+LEFT JOIN public."Ventas" ON public."Ventas"."Id_Venta"=public."Detalle_Ventas"."Id_Venta"
+LEFT JOIN public."Clientes" ON public."Clientes"."Id_Cliente" = public."Ventas"."Id_Cliente"
+LEFT JOIN public."Productos" ON public."Productos"."SKU" = public."Detalle_Ventas"."SKU"
+GROUP BY public."Detalle_Ventas"."Id_Venta", public."Clientes"."Id_Cliente"
+HAVING SUM("Cantidad")>10
+ORDER BY public."Detalle_Ventas"."Id_Venta"
+*/
+
+/*
+5.-ID y nombre de cada cliente y la suma total (suma de cantidad) de los productos que ha comprado. Pista: (https://www.postgresqltutorial.com/postgresql-sum-function/).
+
+SELECT public."Ventas"."Id_Cliente", "Nombre", SUM("Cantidad")
+FROM public."Detalle_Ventas"
+LEFT JOIN public."Ventas" ON public."Ventas"."Id_Venta" = public."Detalle_Ventas"."Id_Venta"
+LEFT JOIN public."Clientes" ON public."Clientes"."Id_Cliente" = public."Ventas"."Id_Cliente"
+GROUP BY public."Ventas"."Id_Cliente",public."Clientes"."Nombre"
+*/
+
+/*
+6.-ID de los productos que no han sido comprados por clientes de Guadalajara.
+
+SELECT DISTINCT "SKU" 
+FROM public."Detalle_Ventas"
+WHERE 	public."Detalle_Ventas"."Id_Venta" NOT IN 
+(
+	SELECT public."Ventas"."Id_Cliente" 
+	FROM public."Ventas"
+	WHERE public."Ventas"."Id_Cliente" IN 
+	(
+		SELECT public."Clientes"."Id_Cliente" 
+		FROM public."Clientes"
+		WHERE public."Clientes"."Ciudad" = 'Guadalajara'
+	)
+)*/
+
+/*
+6.-ID de los productos que se han vendido a clientes de Monterrey y que también se han vendido a clientes de Cancún.
+
+
+SELECT DISTINCT "SKU" 
+FROM public."Detalle_Ventas"
+WHERE 	public."Detalle_Ventas"."Id_Venta" NOT IN 
+(
+	SELECT public."Ventas"."Id_Cliente" 
+	FROM public."Ventas"
+	WHERE public."Ventas"."Id_Cliente" IN 
+	(
+		SELECT public."Clientes"."Id_Cliente" 
+		FROM public."Clientes"
+		WHERE public."Clientes"."Ciudad" = 'Guadalajara'
+	)
+	AND
+	public."Ventas"."Id_Cliente" IN 
+	(
+		SELECT public."Clientes"."Id_Cliente" 
+		FROM public."Clientes"
+		WHERE public."Clientes"."Ciudad" = 'Cancún'
+	)
+)
+*/	
