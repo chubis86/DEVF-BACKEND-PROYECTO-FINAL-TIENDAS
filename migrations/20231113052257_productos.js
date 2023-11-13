@@ -12,6 +12,7 @@ exports.up = function (knex) {
         return knex.schema.createTable('productos', function (table) {
           table.string('SKU').notNullable().primary() // primary() quiere decir que es la llave primaria
           table.string('nombre').notNullable() // notNullable() quiere decir que no puede quedar vacio (nulo)
+          table.text('descripcion')
           table.decimal('precio', 6, 2)
           table.boolean('activo').notNullable().defaultTo(true) // defaultTo() quiere decir un valor por defecto
         })

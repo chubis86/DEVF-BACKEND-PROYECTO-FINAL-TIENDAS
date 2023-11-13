@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 // Update with your config settings.
 
 /**
@@ -8,10 +10,10 @@ module.exports = {
   development: {
     client: 'postgresql',
     connection: {
-      host: 'localhost',
-      database: 'ProyectoFinalTiendas',
-      user:     'postgres',
-      password: 'admin'
+      host: process.env.DB_HOST_DEV,
+      database: process.env.DB_NAME_DEV,
+      user:    process.env.DB_USER_DEV,
+      password: process.env.DB_PASS_DEV
     },
     pool: {
       min: 2,
@@ -51,6 +53,9 @@ module.exports = {
     },
     migrations: {
       tableName: 'knex_migrations'
+    },
+    seeds:{
+      directory: './data/seeds'
     }
   }
 

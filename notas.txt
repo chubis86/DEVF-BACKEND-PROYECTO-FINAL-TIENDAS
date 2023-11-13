@@ -7,11 +7,37 @@
 7.- Modificar knexfile.js con la base postgresql en development
 8.- Identificar host, base de datos, usuario y password
 9.- Crear la base de datos con knex
-	knex migrate:make productos
-	Modificar la migración para crear la tabla ->exports.up --> knex migrate:latest
-	Modificar la migración para crear la tabla ->exports.down --> knex migrate:rollback
-	Hacer lo último para productos, clientes y tiendas
+	-knex migrate:make productos
+	-Modificar la migración para crear la tabla ->exports.up --> knex migrate:latest
+	-Modificar la migración para crear la tabla ->exports.down --> knex migrate:rollback
+	-Hacer lo último para productos, clientes y tiendas
 	
-	Para las tablas que requieren claves foraneas...
-	
+	Para las tablas que requieren claves foraneas se crean otras migraciones relacionando los campos entre las tablas
+10.- Crear las seed para poblar las tablas
+	-Se modifica el archivo knexfile.js
+	,
+        seeds:{
+            directory: './data/seeds'
+        }
+    
+	-Hacer las semillas
+	knex seed:make ---> Se necesita poner un orden en las seeds
+	knex seed:make 01-nombre
+	knex seed:make 02-nombre y así sucesivamente
+
+	-Las primeras semillas deberán de ser las que se apliquen en tablas que no requieran fk
+	-Cuando se corre una semilla se borra la tabla y posteriormente se llena con valores
+	- Se modifica el archivo creado de seed y posteriormente se corre con knex seed:run
+	- En chatgpt es fácil generar el arreglo de objetos para rellenar los archivos de las seeds
+
+11.-  Modificar el server.js para moldear nuestra app a modo MVC
+	- Las vistas son las rutas. Creamos una carpeta para las rutas --> ./routes
+	- Los controladores son los que llevan la lógica entre el modelo y la vista. Creamos una carpeta para los controladores --> ./controllers
+
+12.- Configurar las variables de entorno
+	-Crear archivo .env manualmente poniendo las variables sensibles en el archivo
+	-Se importa el .env en knexfile.js
+	-Se crea el archivo config.js
+13.- En la carpeta controllers empezamos a crear los controladores
+
 
