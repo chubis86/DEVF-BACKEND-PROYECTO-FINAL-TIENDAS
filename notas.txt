@@ -1,0 +1,17 @@
+1.- Iniciar git
+2.- Crear el gitignore
+3.- Instalar express, knex, axios, nodemon
+4.- Modificar el package.json --> "dev": "node server.js"
+5.- Configurar el server.js para ver que todo esté corriendo correctamente
+6.- Configurar knex con knex init
+7.- Modificar knexfile.js con la base postgresql en development
+8.- Identificar host, base de datos, usuario y password
+9.- Crear la base de datos con knex
+	knex migrate:make productos
+	Modificar la migración para crear la tabla ->exports.up --> knex migrate:latest
+	Modificar la migración para crear la tabla ->exports.down --> knex migrate:rollback
+	Hacer lo último para productos, clientes y tiendas
+	
+	Para las tablas que requieren claves foraneas...
+	
+
