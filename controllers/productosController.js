@@ -3,12 +3,12 @@ const modelProductos = require('../models/productos')
 
 const mostrarProducto = (req, res) => {
   
-  modelProductos.mostrar(req.body)
+  modelProductos.mostrar()
     .then(row => {
-      res.status(201).send({ message: 'Producto creado!!!'})
+      res.status(201).send({ message: 'MOSTRAR PRODUCTOS!!!', info: row})
     })
     .catch(err => {
-      res.status(400).send({ message: 'Error creando porducto', err })
+      res.status(400).send({ message: 'ERROR MOSTRANDO PRODUCTOS', err: '' + err })
     })
 }
 
